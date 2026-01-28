@@ -13,7 +13,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-console.log("process.env.NODE_ENV=> ",process.env.NODE_ENV)
+
 if (process.env.NODE_ENV === "production") {
     app.use(morgan("combined"));
 }else{
