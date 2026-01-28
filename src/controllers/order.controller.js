@@ -1,7 +1,8 @@
 const Order = require("../models/Order");
 const Product = require("../models/Product");
+const asyncHandler = require("../utils/asyncHandler");
 
-exports.createOrder = async (req, res) => {
+exports.createOrder = asyncHandler(async (req, res) => {
     try {
         const { items } = req.body;
 
@@ -33,19 +34,19 @@ exports.createOrder = async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-};
+});
 
-exports.getMyOrders = async (req, res) => {
+exports.getMyOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find({ user: req.user.id })
         .populate("items.product", "name price");
 
     res.json(orders);
-};
+});
 
-exports.getAllOrders = async (req, res) => {
+exports.getAllOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find()
         .populate("user", "name email")
         .populate("items.product", "name price");
 
     res.json(orders);
-};
+});

@@ -1,17 +1,18 @@
 const User = require("../models/User");
+const asyncHandler = require("../utils/asyncHandler");
 
 // GET ALL USERS (Admin only)
-exports.getAllUsers = async (req, res) => {
+exports.getAllUsers = asyncHandler(async (req, res) => {
     try {
         const users = await User.find().select("-password");
         res.json(users);
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-};
+});
 
 // UPDATE USER (Admin only)
-exports.updateUser = async (req, res) => {
+exports.updateUser =asyncHandler(async (req, res) => {
     try {
         const { role, name } = req.body;
 
@@ -29,10 +30,10 @@ exports.updateUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-};
+});
 
 // DELETE USER (Admin only)
-exports.deleteUser = async (req, res) => {
+exports.deleteUser = asyncHandler(async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
 
@@ -44,4 +45,4 @@ exports.deleteUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-};
+});

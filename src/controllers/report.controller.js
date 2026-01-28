@@ -1,6 +1,7 @@
 const Order = require("../models/Order");
+const asyncHandler = require("../utils/asyncHandler");
 
-exports.salesReport = async (req, res) => {
+exports.salesReport = asyncHandler(async (req, res) => {
     const report = await Order.aggregate([
         { $match: { status: "delivered" } },
         {
@@ -13,4 +14,4 @@ exports.salesReport = async (req, res) => {
     ]);
 
     res.json(report);
-};
+});

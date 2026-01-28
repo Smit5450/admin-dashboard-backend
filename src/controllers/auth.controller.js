@@ -1,9 +1,10 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const asyncHandler = require("../utils/asyncHandler");
 
 // REGISTER
-exports.register = async (req, res) => {
+exports.register = asyncHandler(async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
 
@@ -30,10 +31,10 @@ exports.register = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-};
+});
 
 // LOGIN
-exports.login = async (req, res) => {
+exports.login = asyncHandler(async (req, res) => {
     try {
         const { email, password } = req.body;
 
@@ -66,6 +67,6 @@ exports.login = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ message: error.message||"Server error" , error});
     }
-};
+});

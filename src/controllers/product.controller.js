@@ -1,27 +1,28 @@
 const Product = require("../models/Product");
+const asyncHandler = require("../utils/asyncHandler");
 
 // CREATE PRODUCT (Admin)
-exports.createProduct = async (req, res) => {
+exports.createProduct = asyncHandler(async (req, res) => {
     try {
         const product = await Product.create(req.body);
         res.status(201).json(product);
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-};
+});
 
 // GET ALL PRODUCTS (Public)
-exports.getProducts = async (req, res) => {
+exports.getProducts = asyncHandler(async (req, res) => {
     try {
         const products = await Product.find();
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-};
+});
 
 // UPDATE PRODUCT (Admin)
-exports.updateProduct = async (req, res) => {
+exports.updateProduct = asyncHandler(async (req, res) => {
     try {
         const product = await Product.findByIdAndUpdate(
             req.params.id,
@@ -37,10 +38,10 @@ exports.updateProduct = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-};
+});
 
 // DELETE PRODUCT (Admin)
-exports.deleteProduct = async (req, res) => {
+exports.deleteProduct = asyncHandler(async (req, res) => {
     try {
         const product = await Product.findByIdAndDelete(req.params.id);
 
@@ -52,4 +53,4 @@ exports.deleteProduct = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server error" });
     }
-};
+});
